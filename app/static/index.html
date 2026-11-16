@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>趣味测试</title>
+<style>
+  :root{
+    --rose:#ff5c7a; --violet:#b44ce0; --peach:#ff8a5c;
+    --grad:linear-gradient(135deg,#ff5c7a 0%,#c44ce0 100%);
+    --grad-warm:linear-gradient(135deg,#ff8a5c 0%,#ff5c7a 100%);
+    --ink:#2b2430; --muted:#a08fa6; --line:#f0e8f2;
+    --bg1:#fff5f7; --bg2:#f4efff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    color:var(--ink); line-height:1.65;
+    background:linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 100%);
+    background-attachment:fixed;
+    min-height:100vh;
+  }
+  /* 背景装饰光斑 */
+  .blob{position:fixed;border-radius:50%;filter:blur(70px);opacity:.5;z-index:0;pointer-events:none;}
+  .blob.b1{width:280px;height:280px;background:#ffd3de;top:-80px;right:-60px;}
+  .blob.b2{width:320px;height:320px;background:#e6d8ff;bottom:-120px;left:-80px;}
+
+  .stage{position:relative;z-index:1;max-width:460px;margin:0 auto;padding:0 20px 48px;}
+  .card{
+    background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
+    border-radius:24px;padding:26px 22px;
+    box-shadow:0 12px 40px rgba(180,76,224,.10), 0 2px 8px rgba(0,0,0,.03);
+    animation:fadeUp .4s cubic-bezier(.2,.8,.3,1) both;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+  /* 头部 */
+  .header{padding:34px 6px 22px;text-align:center;}
+  .logo{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;letter-spacing:.5px;}
+  .logo .dot{width:26px;height:26px;border-radius:8px;background:var(--grad);display:inline-grid;place-items:center;font-size:14px;box-shadow:0 4px 12px rgba(255,92,122,.35);}
+  .header h1{font-size:26px;font-weight:800;margin-top:10px;letter-spacing:1px;}
+  .header h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .header .sub{color:var(--muted);font-size:13px;margin-top:6px;}
+
+  /* 首页卡片 */
+  .test-item{
+    background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
+    border-radius:20px;padding:20px 18px;margin-bottom:14px;cursor:pointer;
+    display:flex;align-items:center;gap:16px;
+    box-shadow:0 8px 24px rgba(180,76,224,.08);
+    transition:transform .18s ease, box-shadow .18s ease;
+    animation:fadeUp .45s cubic-bezier(.2,.8,.3,1) both;
+  }
+  .test-item:nth-child(2){animation-delay:.05s}
+  .test-item:nth-child(3){animation-delay:.1s}
+  .test-item:nth-child(4){animation-delay:.15s}
+  .test-item:active{transform:scale(.98);box-shadow:0 4px 14px rgba(180,76,224,.12);}
+  .test-item .ico{width:54px;height:54px;border-radius:16px;background:var(--grad-warm);display:grid;place-items:center;font-size:26px;flex:none;box-shadow:0 6px 16px rgba(255,92,122,.25);}
+  .test-item .cat{color:var(--rose);font-size:12px;font-weight:700;letter-spacing:.5px;}
+  .test-item .t{font-size:18px;font-weight:700;margin:2px 0;}
+  .test-item .m{color:var(--muted);font-size:12px;}
+  .test-item .arrow{margin-left:auto;color:#d6c8dd;font-size:20px;}
+
+  /* 答题 */
+  .q-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .q-num{font-size:13px;font-weight:700;color:#fff;background:var(--grad);padding:4px 12px;border-radius:20px;letter-spacing:.5px;}
+  .q-count{font-size:12px;color:var(--muted);}
+  .progress{height:8px;background:#f1e9f4;border-radius:10px;overflow:hidden;margin-bottom:22px;}
+  .progress i{display:block;height:100%;background:var(--grad);border-radius:10px;transition:width .35s cubic-bezier(.2,.8,.3,1);}
+  .q-text{font-size:20px;font-weight:700;line-height:1.5;margin-bottom:22px;}
+  .opt{
+    display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+    background:#faf7fc;border:1.5px solid var(--line);border-radius:16px;
+    padding:15px 16px;font-size:15.5px;margin-bottom:12px;cursor:pointer;color:var(--ink);
+    transition:border-color .18s, background .18s, transform .1s;
+  }
+  .opt:active{background:#fff0f4;border-color:var(--rose);transform:scale(.985);}
+  .opt .k{
+    width:28px;height:28px;border-radius:9px;flex:none;display:grid;place-items:center;
+    background:#fff;border:1.5px solid #eadcf0;font-size:13px;font-weight:800;color:var(--violet);
+  }
+  .opt:active .k{background:var(--grad);color:#fff;border-color:transparent;}
+
+  /* 结果 */
+  .result{text-align:center;}
+  .result .tag-chip{display:inline-block;background:#fff0f4;color:var(--rose);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:1px;}
+  .result .rtype{font-size:30px;font-weight:800;margin:12px 0 4px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .result .rtag{color:var(--muted);font-size:14px;margin-bottom:18px;}
+  .hook{
+    background:linear-gradient(135deg,#fff7f9,#f7f0ff);border-radius:16px;padding:18px 16px;
+    font-size:17px;font-weight:600;line-height:1.6;margin-bottom:22px;position:relative;
+  }
+  .hook::before{content:"“";position:absolute;top:-8px;left:12px;font-size:42px;color:var(--rose);opacity:.25;font-family:Georgia,serif;}
+
+  .btn{
+    display:block;width:100%;border:none;border-radius:22px;padding:16px;font-size:16px;font-weight:700;
+    cursor:pointer;letter-spacing:.5px;transition:transform .15s, box-shadow .2s;
+  }
+  .btn.primary{background:var(--grad);color:#fff;box-shadow:0 8px 20px rgba(255,92,122,.35);}
+  .btn.primary:active{transform:scale(.98);box-shadow:0 4px 12px rgba(255,92,122,.3);}
+  .btn.ghost{background:#fff;color:var(--violet);border:1.5px solid #e4d3ee;margin-top:12px;}
+
+  /* 完整报告 */
+  .report .rtype{font-size:24px;font-weight:800;margin-bottom:2px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .report .rtag{color:var(--muted);font-size:13px;margin-bottom:20px;}
+  .section{margin-top:20px;text-align:left;}
+  .section h3{font-size:14px;font-weight:800;color:var(--rose);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+  .section p,.section li{font-size:15px;color:#4a4152;margin-bottom:6px;}
+  .section ul{list-style:none;padding:0;}
+  .section li{padding:11px 14px;background:#faf7fc;border-radius:12px;margin-bottom:8px;}
+  .section li::before{content:"✦";color:var(--rose);margin-right:8px;font-size:13px;}
+
+  .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:24px;letter-spacing:.5px;}
+</style>
+</head>
+<body>
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+<div class="stage" id="app"></div>
+<script>
+const app = document.getElementById('app');
+const $ = (html) => { app.innerHTML = html; };
+const esc = (s) => (s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const EMOJI = { love:'💗', career:'💼', money:'💰', social:'👥' };
+
+async function fetchJSON(url, opts) {
+  const r = await fetch(url, opts);
+  if (!r.ok) throw new Error((await r.json()).error || r.status);
+  return r.json();
+}
+
+// —— 首页 ——
+async function renderHome() {
+  const tests = await fetchJSON('/api/tests');
+  $('<div class="header">' +
+      '<div class="logo"><span class="dot">✨</span>趣味测试实验室</div>' +
+      '<h1>测测<span>真实的你</span></h1>' +
+      '<div class="sub">选一个开始 · 仅供娱乐</div>' +
+    '</div>' +
+    tests.map(t => `
+      <div class="test-item" onclick="startTest('${t.id}')">
+        <div class="ico">${EMOJI[t.id] || '✨'}</div>
+        <div>
+          <div class="cat">${esc(t.category)}</div>
+          <div class="t">${esc(t.title)}</div>
+          <div class="m">${t.question_count} 道题 · 约 1 分钟</div>
+        </div>
+        <div class="arrow">›</div>
+      </div>`).join(''));
+}
+window.startTest = async function(id) {
+  const test = await fetchJSON('/api/test/' + id);
+  window.__test = test;
+  window.__answers = [];
+  renderQuestion(0);
+};
+
+// —— 答题 ——
+function renderQuestion(i) {
+  const t = window.__test, q = t.questions[i];
+  const pct = (i / t.questions.length) * 100;
+  $('<div class="card">' +
+      '<div class="q-top">' +
+        '<span class="q-num">' + (i+1) + ' / ' + t.questions.length + '</span>' +
+        '<span class="q-count">' + esc(t.category) + ' · 仅供娱乐</span>' +
+      '</div>' +
+      '<div class="progress"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="q-text">' + esc(q.text) + '</div>' +
+      q.options.map(o => '<button class="opt" onclick="answer(' + i + ', \'' + o.key + '\')"><span class="k">' + o.key + '</span><span>' + esc(o.text) + '</span></button>').join('') +
+    '</div>');
+}
+window.answer = function(i, key) {
+  window.__answers[i] = key;
+  const t = window.__test;
+  if (i + 1 < t.questions.length) renderQuestion(i + 1);
+  else submit();
+};
+async function submit() {
+  const t = window.__test;
+  const res = await fetchJSON('/api/test/' + t.id + '/result', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({answers: window.__answers})
+  });
+  renderResult(res);
+}
+
+// —— 免费结果 ——
+function renderResult(r) {
+  $('<div class="card result">' +
+      '<span class="tag-chip">你的隐藏人格</span>' +
+      '<div class="rtype">' + esc(r.type) + '</div>' +
+      '<div class="rtag">' + esc(r.tagline) + '</div>' +
+      '<div class="hook">' + esc(r.hook) + '</div>' +
+      '<button class="btn primary" onclick="unlock()">解锁完整报告</button>' +
+      '<button class="btn ghost" onclick="location.reload()">再测一次</button>' +
+    '</div>');
+}
+window.unlock = async function() {
+  const t = window.__test;
+  const r = await fetchJSON('/api/test/' + t.id + '/report', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({answers: window.__answers})
+  });
+  $('<div class="card report">' +
+      '<div class="rtype">' + esc(r.type) + ' · ' + esc(r.tagline) + '</div>' +
+      '<div class="rtag">你的专属报告</div>' +
+      '<div class="section"><h3>🪞 性格画像</h3><p>' + esc(r.portrait) + '</p></div>' +
+      '<div class="section"><h3>💪 你的三个隐藏优势</h3><ul>' + r.strengths.map(s => '<li>' + esc(s) + '</li>').join('') + '</ul></div>' +
+      '<div class="section"><h3>⚠️ 一个要警惕的盲区</h3><p>' + esc(r.blindspot) + '</p></div>' +
+      '<div class="section"><h3>💡 给你的建议</h3><p>' + esc(r.advice) + '</p></div>' +
+      '<button class="btn ghost" onclick="location.reload()">再测一次</button>' +
+    '</div>' +
+    '<div class="foot">仅供娱乐，愿你更懂自己 ✨</div>');
+};
+
+renderHome().catch(e => $('<div class="card">加载失败：' + esc(e.message) + '</div>'));
+</script>
+</body>
+</html>
