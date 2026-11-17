@@ -25,6 +25,9 @@
     ├── server.py        # HTTP 服务 + 埋点 + 免费/付费拆分
     ├── static/index.html # 答题前端
     ├── data/            # 题库+报告（JSON，新增品类加这里）
+    ├── generate_deliverable.py   # 生成静态「试卷包」（发货内容）
+    ├── generate_interactive.py   # 生成场景互动版（沉浸式小游戏体验）
+    ├── deliverables/    # 成品交付物（自包含 HTML，直接当发货内容）
     └── README.md        # 技术文档
 ```
 
@@ -62,6 +65,7 @@ python3 server.py
 - [x] 4 个测试品类（题库+报告）
 - [x] 打分引擎 + H5 产品 + 埋点
 - [x] 免费/付费拆分（接支付就绪）
+- [x] 交付物：静态试卷包 ×4 + 场景互动版《午夜列车生存测试》
 - [ ] 个体户营业执照 + 小红书开店
 - [ ] 上架测试商品 + 自动发货
 - [ ] 部署（服务器 + ICP 备案）

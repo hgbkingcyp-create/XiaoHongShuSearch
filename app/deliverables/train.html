@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>午夜列车生存测试</title><style>
+:root{--sky1:#0c1230;--sky2:#2a1e4f;--glow:#ffd27a;--accent:#ff8a5c;--text:#f5f1e8;
+--card:rgba(255,255,255,.07);--line:rgba(255,255,255,.14);--muted:rgba(245,241,232,.55);}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{min-height:100%;}
+body{font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+color:var(--text);line-height:1.75;background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 100%);
+background-attachment:fixed;display:flex;justify-content:center;padding:24px 16px 48px;}
+.stage{width:100%;max-width:460px;position:relative;}
+
+/* —— 车窗 —— */
+.window{position:relative;height:200px;border-radius:18px;overflow:hidden;flex:none;
+background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 78%,rgba(0,0,0,.55) 100%);
+border:6px solid rgba(20,14,40,.9);box-shadow:0 0 0 2px var(--line),0 14px 40px rgba(0,0,0,.45);}
+.moon{position:absolute;top:26px;right:38px;width:38px;height:38px;border-radius:50%;
+background:radial-gradient(circle at 35% 35%,#fffbe8,var(--glow));box-shadow:0 0 26px 8px rgba(255,210,122,.35);}
+.star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:tw 2.6s ease-in-out infinite;}
+@keyframes tw{0%,100%{opacity:.2}50%{opacity:1}}
+.streak{position:absolute;left:-40%;width:40%;height:2px;border-radius:2px;
+background:linear-gradient(90deg,transparent,var(--glow),transparent);opacity:.7;animation:whoosh 2.4s linear infinite;}
+.streak.s2{bottom:52px;width:26%;animation-duration:3.4s;animation-delay:.9s;opacity:.45;}
+.streak.s1{bottom:74px;}
+@keyframes whoosh{from{transform:translateX(0)}to{transform:translateX(340%)}}
+.rail{position:absolute;left:0;right:0;bottom:16px;height:3px;
+background:repeating-linear-gradient(90deg,rgba(255,255,255,.4) 0 14px,transparent 14px 34px);
+animation:rails .5s linear infinite;}
+@keyframes rails{from{background-position-x:0}to{background-position-x:-34px}}
+.window .hills{position:absolute;left:0;right:0;bottom:0;height:44px;
+background:radial-gradient(120px 60px at 18% 100%,rgba(0,0,0,.5),transparent 70%),
+radial-gradient(160px 70px at 58% 100%,rgba(0,0,0,.45),transparent 70%),
+radial-gradient(120px 50px at 92% 100%,rgba(0,0,0,.5),transparent 70%);}
+
+/* —— 结构 —— */
+.screen{display:none;}
+.screen.on{display:block;animation:fadeUp .45s cubic-bezier(.2,.8,.3,1) both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.card{background:var(--card);backdrop-filter:blur(12px);border:1px solid var(--line);
+border-radius:20px;padding:24px 20px;margin-top:16px;}
+
+/* —— 开场 —— */
+.badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:2px;color:var(--glow);
+border:1px solid var(--glow);border-radius:20px;padding:4px 14px;margin-bottom:14px;}
+h1.title{font-size:27px;font-weight:800;letter-spacing:1px;line-height:1.4;}
+.sub{color:var(--muted);font-size:14px;margin-top:6px;}
+.intro-text{font-size:15.5px;margin-top:16px;color:#efe9db;}
+.meta{font-size:12px;color:var(--muted);margin-top:14px;}
+.btn{display:block;width:100%;border:none;border-radius:18px;padding:16px;font-size:16.5px;
+font-weight:800;letter-spacing:1px;cursor:pointer;margin-top:20px;color:#1c1230;
+background:linear-gradient(135deg,var(--glow),var(--accent));box-shadow:0 10px 26px rgba(255,138,92,.35);
+transition:transform .15s;}
+.btn:active{transform:scale(.98);}
+
+/* —— 问题 —— */
+.q-top{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted);margin-top:18px;}
+.q-top b{color:var(--glow);letter-spacing:1px;}
+.progress{height:6px;background:rgba(255,255,255,.1);border-radius:8px;overflow:hidden;margin:10px 0 4px;}
+.progress i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,var(--glow),var(--accent));
+transition:width .4s cubic-bezier(.2,.8,.3,1);}
+.scene{font-size:14.5px;color:var(--muted);font-style:italic;margin-top:10px;min-height:44px;}
+.qtext{font-size:20px;font-weight:800;line-height:1.5;margin:12px 0 6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;margin-top:12px;
+background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px 15px;
+font-size:15.5px;color:var(--text);cursor:pointer;font-family:inherit;line-height:1.5;
+transition:border-color .15s,background .15s,transform .1s;}
+.opt:active{transform:scale(.985);border-color:var(--glow);background:rgba(255,210,122,.12);}
+.opt .k{flex:none;width:26px;height:26px;border-radius:9px;display:grid;place-items:center;
+font-size:13px;font-weight:800;background:rgba(255,255,255,.12);color:var(--glow);margin-top:1px;}
+.caret{display:inline-block;width:2px;height:1em;background:var(--glow);vertical-align:-2px;animation:blink .8s steps(1) infinite;}
+@keyframes blink{50%{opacity:0}}
+
+/* —— 结果 —— */
+.rtype{font-size:28px;font-weight:800;margin-top:14px;
+background:linear-gradient(135deg,var(--glow),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.rtag{color:var(--muted);font-size:14px;margin:2px 0 16px;}
+.hook{background:rgba(255,210,122,.09);border:1px solid rgba(255,210,122,.25);border-radius:16px;
+padding:16px;font-size:16px;font-weight:600;line-height:1.7;position:relative;margin-bottom:6px;}
+.hook::before{content:"“";position:absolute;top:-10px;left:10px;font-size:44px;color:var(--glow);opacity:.4;font-family:Georgia,serif;}
+.sec{margin-top:18px;}
+.sec h3{font-size:13.5px;font-weight:800;color:var(--glow);letter-spacing:1px;margin-bottom:6px;}
+.sec p{font-size:15px;color:#efe9db;}
+.sec ul{list-style:none;}
+.sec li{font-size:14.5px;padding:10px 12px;background:var(--card);border:1px solid var(--line);
+border-radius:12px;margin-bottom:8px;color:#efe9db;}
+.sec li::before{content:"✦";color:var(--glow);margin-right:8px;}
+.foot{text-align:center;color:var(--muted);font-size:12px;margin-top:22px;letter-spacing:.5px;}
+.share-tip{margin-top:16px;font-size:13px;color:var(--muted);text-align:center;}
+@media print{body{background:#171233;-webkit-print-color-adjust:exact;print-color-adjust:exact;}.btn{display:none;}}
+</style></head><body><div class="stage"><div class="window"><div class="moon"></div><div class="hills"></div><div class="streak s1"></div><div class="streak s2"></div><div class="rail"></div></div><div class="screen on" id="intro"><div class="card"><span class="badge">场景测试 · 人生状态</span><h1 class="title">午夜列车生存测试</h1><div class="sub">8 个选择，测出你当下活成了哪种状态</div><div class="intro-text">23:47，一列没有终点的火车，在你面前缓缓停靠。车门打开，暖光洒在站台上。你，上不上车？</div><div class="meta">8 幕 · 约 3 分钟 · 仅供娱乐</div><button class="btn" onclick="begin()">🚂 登上这趟列车</button></div></div><div class="screen" id="quiz"><div class="q-top"><b id="stop"></b><span id="total"></span></div><div class="progress"><i id="bar"></i></div><div class="scene" id="scene"></div><div class="qtext" id="qtext"></div><div id="opts"></div></div><div class="screen" id="result"><div class="card" id="rcard"></div><div class="share-tip">📸 截图分享你的那一幕 —— 或许你的朋友也想上车</div><button class="btn" onclick="location.reload()">↻ 重新上车</button></div><div class="foot">仅供娱乐 · 愿你到站时眼里有光 ✨</div></div><script>
+const TEST={"id":"train","format":"interactive","title":"午夜列车生存测试","category":"场景测试 · 人生状态","subtitle":"8 个选择，测出你当下活成了哪种状态","disclaimer":"仅供娱乐","intro":"23:47，一列没有终点的火车，在你面前缓缓停靠。车门打开，暖光洒在站台上。你，上不上车？","theme":{"sky1":"#0c1230","sky2":"#2a1e4f","glow":"#ffd27a","accent":"#ff8a5c","text":"#f5f1e8"},"questions":[{"id":1,"scene":"23:47，一列没有目的地的火车停在你面前。车门开了，暖光洒出来。","text":"你上了车。第一件事是？","options":[{"key":"A","text":"先看线路图，搞清楚下一站是哪"},{"key":"B","text":"随遇而安，坐到哪算哪"},{"key":"C","text":"确认同行的人都在车上"},{"key":"D","text":"找个靠窗的空位，戴上耳机"}]},{"id":2,"scene":"轰隆隆——列车驶入长长的隧道，灯灭了几秒，车厢里一片漆黑。","text":"这一刻，你的反应是？","options":[{"key":"A","text":"摸出手机看时间，别耽误事"},{"key":"B","text":"有点小兴奋，像在玩密室"},{"key":"C","text":"下意识说了句「别怕」"},{"key":"D","text":"闭眼，享受这几秒的黑暗"}]},{"id":3,"scene":"灯亮了。你在座椅口袋里发现一张旧明信片，前一位乘客留了一句话。","text":"那句「祝你______」，你希望填的是？","options":[{"key":"A","text":"所求之事，皆能抵达"},{"key":"B","text":"沿途皆有好风景"},{"key":"C","text":"重要的人常在身边"},{"key":"D","text":"有足够的时间陪自己"}]},{"id":4,"scene":"列车停靠在一个空无一人的小站。还没等你看清站牌，它提前开动了。","text":"看着站台缓缓后退，你想的是？","options":[{"key":"A","text":"赶紧查时刻表，看会不会误事"},{"key":"B","text":"正好，反正我也没打算下"},{"key":"C","text":"担心会不会有人赶不上车"},{"key":"D","text":"挺好，清净，没人打扰"}]},{"id":5,"scene":"车厢尽头传来咣当咣当的响声，一辆卖泡面的餐车推过隧道，香味弥漫。","text":"你接过一碗。这顿夜宵，你会？","options":[{"key":"A","text":"快速吃完，不耽误后面的安排"},{"key":"B","text":"深夜泡面是奢侈品，慢慢享用"},{"key":"C","text":"先问同行的人要不要也来一碗"},{"key":"D","text":"小口吃着，配窗外的夜色刚好"}]},{"id":6,"scene":"不知过了多久，你抬头——窗外的星星多得不像话，近得像伸手就能碰到。","text":"这一刻，你的第一反应是？","options":[{"key":"A","text":"拍下来打卡，记录这趟旅程"},{"key":"B","text":"「哇」出声，赶紧许个愿"},{"key":"C","text":"想叫醒旁边的人一起看"},{"key":"D","text":"安静地看很久，心里就够了"}]},{"id":7,"scene":"对面座位的乘客已经打量你很久了。终于，对方笑着开口跟你搭话。","text":"一场深夜的陌生人闲聊，你会？","options":[{"key":"A","text":"三两句摸清对方，聊点有用的"},{"key":"B","text":"随缘聊，投缘就聊通宵"},{"key":"C","text":"礼貌回应，怕冷落对方"},{"key":"D","text":"应付几句，逃回窗外的世界"}]},{"id":8,"scene":"天快亮了。口袋里凭空多出一张车票，印着你的名字，和「当前站」。列车减速。","text":"你站起身，最后一次回望这趟夜车。留在你记忆里的，是？","options":[{"key":"A","text":"下车后的第一个目标，已经想好了"},{"key":"B","text":"这一路的风景，够回味很久"},{"key":"C","text":"同行者的脸，还好你们都在"},{"key":"D","text":"那场久违的、和自己的对话"}]}],"results":[{"key":"A","type":"追光赶路人","tagline":"你心里始终有个要到站的地方","hook":"你不是不会停，你只是太清楚自己要去哪。","portrait":"哪怕是一列深夜火车，你的习惯也是先看线路图、先定目标、再走下一步。你活得像在赶路——睡在陌生的车厢里，梦里都是到站的清晨。你累，但你的眼睛一直亮着：有奔头的人，是会发光的。","strengths":["目标感极强，很少在迷茫里浪费时间","执行力高，决定了就立刻动身","能把任何混乱，理成一张时刻表"],"blindspot":"你盯着终点，容易错过窗外的星空；你一直赶路，久到连自己都不知道，如果突然不赶了，要去哪。","advice":"偶尔上一列没有目的地的车。目的地又不会跑，但你错过的那片星空，永远不会再亮一次。"},{"key":"B","type":"随遇而安风景派","tagline":"既然不知道去哪，那就先看风景","hook":"你不是没主见，你是把「随便」活成了一种天赋。","portrait":"火车去哪就去哪，你到哪就到哪，你把所有的不确定都当成彩蛋。你是那种能在空无一人的小站看出趣味的人，也是那种拿到烂剧本也能演到散场的人。你早就明白：终点是俗套，沿途才常看常新。","strengths":["适应力顶级，到哪都能混得如鱼得水","自带发现快乐的雷达，和你相处很松弛","不较劲、不内耗，活得比大多数人都轻盈"],"blindspot":"「随便」说多了，有时会变成「算了」；在重要的人和事上，你可能缺一点「我就要」的野心。","advice":"松弛感是天赋，但人生有几件事值得你死死攥住。挑一件，认真贪心一次——以你享受过程的本事，做什么都会是一场漂亮旅程。"},{"key":"C","type":"末班守护星","tagline":"你把在乎的人都装在心里","hook":"你不怕到站太远，你怕身边没有人。","portrait":"上车先确认人齐不齐，看到星空第一反应是叫醒旁边的人。你的安全感从来不来自事物，而来自「我关心的人都在」。你是所有关系里最容易被忽略、却又最不能缺少的那个人——有你在，别人才会觉得「稳了」。","strengths":["共情力和责任心拉满，是所有人的情绪底座","记得住别人随口一提的小事","关系在你这里，从来都是越处越长的"],"blindspot":"你把每个人都放在心上，常常把自己放在最后；你太习惯被需要，久了连自己需要什么都不知道。","advice":"你照顾了所有人，也该轮到被人照顾一次。这趟车上，记得给自己留一个靠窗的位置。"},{"key":"D","type":"靠窗观察家","tagline":"你隔着车窗看世界，看得比谁都清","hook":"你不是不合群，你只是更喜欢和世界保持一点距离。","portrait":"提前开车是馈赠，黑暗是享受，陌生人的搭话应付两句就好。你在窗边给自己搭了一个完整的世界，安静地看着风景后退。你比谁都清楚：有些路必须一个人走，有些声音，只有在安静里才听得见。","strengths":["独立思考，从不被人群带节奏","感知细腻，能看到别人看不到的东西","独处能力顶级，自己就能把自己哄好"],"blindspot":"你习惯隔窗观看，久到别人以为你不需要任何人；清冷有时不是距离，是别人想走近时你没留的门。","advice":"窗外的风景，要有人一起看才更动人。偶尔转过身，先开口一次——深夜的火车，恰好是陌生人之间最近的地方。"}]};
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => (s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const answers = [];
+let step = 0;
+
+// 星空
+(function stars() {
+  const w = document.querySelector('.window');
+  for (let i = 0; i < 36; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 60 + '%';
+    s.style.animationDelay = (Math.random() * 2.6).toFixed(2) + 's';
+    if (Math.random() < .2) { s.style.width = s.style.height = '3px'; }
+    w.appendChild(s);
+  }
+})();
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(el => el.classList.remove('on'));
+  $(id).classList.add('on');
+}
+
+function begin() { step = 0; renderQ(); show('quiz'); }
+
+// 打字机旁白
+let typeTimer = null;
+function typeScene(text) {
+  clearInterval(typeTimer);
+  const el = $('scene');
+  el.innerHTML = '<span class="caret"></span>';
+  let i = 0;
+  typeTimer = setInterval(() => {
+    i++;
+    el.innerHTML = esc(text.slice(0, i)) + (i < text.length ? '<span class="caret"></span>' : '');
+    if (i >= text.length) clearInterval(typeTimer);
+  }, 24);
+}
+
+function renderQ() {
+  const q = TEST.questions[step], n = TEST.questions.length;
+  $('stop').textContent = '第 ' + (step + 1) + ' 站 / 共 ' + n + ' 站';
+  $('total').textContent = TEST.category;
+  $('bar').style.width = (step / n) * 100 + '%';
+  typeScene(q.scene || '');
+  $('qtext').textContent = q.text;
+  $('opts').innerHTML = q.options.map((o, i) =>
+    '<button class="opt" onclick="pick(' + i + ')"><span class="k">' + esc(o.key) + '</span><span>' + esc(o.text) + '</span></button>'
+  ).join('');
+  window.scrollTo({ top: 0 });
+}
+
+function pick(i) {
+  answers.push(TEST.questions[step].options[i].key);
+  step++;
+  if (step < TEST.questions.length) { renderQ(); }
+  else { renderResult(); }
+}
+
+// 计分：与后端 engine.py 完全一致（次数最多者命中，并列取先出现者）
+function score() {
+  const order = [], count = {};
+  answers.forEach(k => { if (!(k in count)) { count[k] = 0; order.push(k); } count[k]++; });
+  let best = order[0];
+  order.forEach(k => { if (count[k] > count[best]) best = k; });
+  return TEST.results.find(r => r.key === best);
+}
+
+function renderResult() {
+  const r = score(), n = TEST.questions.length;
+  const dist = {};
+  answers.forEach(k => dist[k] = (dist[k] || 0) + 1);
+  const bars = ['A', 'B', 'C', 'D'].filter(k => dist[k]).map(k =>
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px;color:var(--muted)">' +
+    '<span style="width:16px;font-weight:800;color:var(--glow)">' + k + '</span>' +
+    '<div style="flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden">' +
+    '<i style="display:block;height:100%;width:' + (dist[k] / n * 100) + '%;background:linear-gradient(90deg,var(--glow),var(--accent));border-radius:6px"></i></div>' +
+    '<span>' + dist[k] + ' 票</span></div>').join('');
+  $('rcard').innerHTML =
+    '<span class="badge">列车到站 · 你的专属结局</span>' +
+    '<div class="rtype">' + esc(r.type) + '</div>' +
+    '<div class="rtag">' + esc(r.tagline) + '</div>' +
+    '<div class="hook">' + esc(r.hook) + '</div>' +
+    '<div style="margin-top:14px">' + bars + '</div>' +
+    '<div class="sec"><h3>🪞 人格画像</h3><p>' + esc(r.portrait) + '</p></div>' +
+    '<div class="sec"><h3>💪 你的三个隐藏优势</h3><ul>' + r.strengths.map(s => '<li>' + esc(s) + '</li>').join('') + '</ul></div>' +
+    '<div class="sec"><h3>⚠️ 一个要警惕的盲区</h3><p>' + esc(r.blindspot) + '</p></div>' +
+    '<div class="sec"><h3>💡 这趟列车给你的建议</h3><p>' + esc(r.advice) + '</p></div>';
+  show('result');
+  window.scrollTo({ top: 0 });
+}
+
+</script></body></html>
