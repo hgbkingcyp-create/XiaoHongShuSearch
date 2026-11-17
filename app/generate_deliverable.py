@@ -110,6 +110,8 @@ def main():
     for path in sorted(DATA.glob("*.json")):
         with open(path, encoding="utf-8") as f:
             test = json.load(f)
+        if test.get("format") == "interactive":
+            continue  # 互动格式由 generate_interactive.py 生成，勿覆盖
         html = render_test(test)
         out_path = OUT / f"{test['id']}.html"
         out_path.write_text(html, encoding="utf-8")

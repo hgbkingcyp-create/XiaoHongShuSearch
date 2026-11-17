@@ -19,11 +19,17 @@ def load_test(test_id: str) -> dict:
 
 
 def list_tests() -> list[dict]:
-    """列出所有可用测试（只返回轻量元信息，不含题库/报告正文）。"""
+    """列出所有可用测试（只返回轻量元信息，不含题库/报告正文）。
+
+    互动格式（format=interactive）走独立交付物（generate_interactive.py 生成的
+    自包含 HTML，支持分支/隐藏结局），H5 演示端不渲染分支逻辑，故此处过滤掉。
+    """
     tests = []
     for path in sorted(DATA_DIR.glob("*.json")):
         with open(path, encoding="utf-8") as f:
             data = json.load(f)
+        if data.get("format") == "interactive":
+            continue
         tests.append({
             "id": data["id"],
             "title": data["title"],

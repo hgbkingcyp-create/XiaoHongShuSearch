@@ -40,10 +40,12 @@ border-radius:20px;padding:24px 20px;margin-top:16px;}
 /* —— 开场 —— */
 .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:2px;color:var(--glow);
 border:1px solid var(--glow);border-radius:20px;padding:4px 14px;margin-bottom:14px;}
+.badge.secret{color:#ffe9f7;border-color:#ff8ad4;background:rgba(255,138,212,.12);box-shadow:0 0 18px rgba(255,138,212,.35);}
 h1.title{font-size:27px;font-weight:800;letter-spacing:1px;line-height:1.4;}
 .sub{color:var(--muted);font-size:14px;margin-top:6px;}
 .intro-text{font-size:15.5px;margin-top:16px;color:#efe9db;}
 .meta{font-size:12px;color:var(--muted);margin-top:14px;}
+.meta .hint{color:var(--glow);}
 .btn{display:block;width:100%;border:none;border-radius:18px;padding:16px;font-size:16.5px;
 font-weight:800;letter-spacing:1px;cursor:pointer;margin-top:20px;color:#1c1230;
 background:linear-gradient(135deg,var(--glow),var(--accent));box-shadow:0 10px 26px rgba(255,138,92,.35);
@@ -65,12 +67,24 @@ transition:border-color .15s,background .15s,transform .1s;}
 .opt:active{transform:scale(.985);border-color:var(--glow);background:rgba(255,210,122,.12);}
 .opt .k{flex:none;width:26px;height:26px;border-radius:9px;display:grid;place-items:center;
 font-size:13px;font-weight:800;background:rgba(255,255,255,.12);color:var(--glow);margin-top:1px;}
+.opt.cat{border-color:rgba(255,138,212,.5);}
+.opt.cat .k{background:rgba(255,138,212,.25);color:#ffb3e2;}
 .caret{display:inline-block;width:2px;height:1em;background:var(--glow);vertical-align:-2px;animation:blink .8s steps(1) infinite;}
 @keyframes blink{50%{opacity:0}}
+.flash{position:fixed;inset:0;background:radial-gradient(circle,rgba(255,138,212,.35),transparent 70%);
+opacity:0;pointer-events:none;z-index:9;}
+.flash.go{animation:flash 1.4s ease-out;}
+@keyframes flash{0%{opacity:0}18%{opacity:1}100%{opacity:0}}
+.toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-70px);z-index:10;
+background:rgba(28,18,48,.92);border:1px solid #ff8ad4;color:#ffd6f2;font-size:13px;font-weight:700;
+padding:9px 18px;border-radius:30px;transition:transform .45s cubic-bezier(.2,.8,.3,1);white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
 
 /* —— 结果 —— */
-.rtype{font-size:28px;font-weight:800;margin-top:14px;
+.rtype{font-size:28px;font-weight:800;margin-top:14px;line-height:1.35;
 background:linear-gradient(135deg,var(--glow),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.rarity{display:inline-block;margin-top:10px;font-size:12px;color:var(--muted);
+border:1px dashed var(--line);border-radius:14px;padding:3px 12px;}
 .rtag{color:var(--muted);font-size:14px;margin:2px 0 16px;}
 .hook{background:rgba(255,210,122,.09);border:1px solid rgba(255,210,122,.25);border-radius:16px;
 padding:16px;font-size:16px;font-weight:600;line-height:1.7;position:relative;margin-bottom:6px;}
@@ -82,16 +96,37 @@ padding:16px;font-size:16px;font-weight:600;line-height:1.7;position:relative;ma
 .sec li{font-size:14.5px;padding:10px 12px;background:var(--card);border:1px solid var(--line);
 border-radius:12px;margin-bottom:8px;color:#efe9db;}
 .sec li::before{content:"✦";color:var(--glow);margin-right:8px;}
+.note{margin-top:18px;background:rgba(255,255,255,.05);border-left:3px solid var(--glow);
+border-radius:0 12px 12px 0;padding:12px 14px;font-size:13.5px;color:var(--muted);font-style:italic;}
+.partner{margin-top:10px;background:rgba(255,138,212,.08);border:1px solid rgba(255,138,212,.25);
+border-radius:12px;padding:12px 14px;font-size:13.5px;color:#f6d9ee;}
+.partner b{color:#ffb3e2;}
+
+/* —— 足迹回放 —— */
+.jline{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;}
+.jstop{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+font-size:12px;font-weight:800;background:rgba(255,255,255,.1);color:var(--glow);
+border:1px solid var(--line);margin-top:2px;}
+.jline .jscene{font-size:12.5px;color:var(--muted);font-style:italic;line-height:1.6;}
+.jline .jpick{font-size:14px;color:#efe9db;margin-top:2px;}
+.jline.jcat .jstop{background:rgba(255,138,212,.22);color:#ffb3e2;border-color:rgba(255,138,212,.5);}
+.jline.jcat .jpick{color:#ffd6f2;font-weight:600;}
+.jsum{margin-top:6px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);
+border-radius:12px;padding:10px 12px;}
+.jsum b{color:var(--glow);}
 .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:22px;letter-spacing:.5px;}
 .share-tip{margin-top:16px;font-size:13px;color:var(--muted);text-align:center;}
 @media print{body{background:#171233;-webkit-print-color-adjust:exact;print-color-adjust:exact;}.btn{display:none;}}
-</style></head><body><div class="stage"><div class="window"><div class="moon"></div><div class="hills"></div><div class="streak s1"></div><div class="streak s2"></div><div class="rail"></div></div><div class="screen on" id="intro"><div class="card"><span class="badge">场景测试 · 人生状态</span><h1 class="title">午夜列车生存测试</h1><div class="sub">8 个选择，测出你当下活成了哪种状态</div><div class="intro-text">23:47，一列没有终点的火车，在你面前缓缓停靠。车门打开，暖光洒在站台上。你，上不上车？</div><div class="meta">8 幕 · 约 3 分钟 · 仅供娱乐</div><button class="btn" onclick="begin()">🚂 登上这趟列车</button></div></div><div class="screen" id="quiz"><div class="q-top"><b id="stop"></b><span id="total"></span></div><div class="progress"><i id="bar"></i></div><div class="scene" id="scene"></div><div class="qtext" id="qtext"></div><div id="opts"></div></div><div class="screen" id="result"><div class="card" id="rcard"></div><div class="share-tip">📸 截图分享你的那一幕 —— 或许你的朋友也想上车</div><button class="btn" onclick="location.reload()">↻ 重新上车</button></div><div class="foot">仅供娱乐 · 愿你到站时眼里有光 ✨</div></div><script>
-const TEST={"id":"train","format":"interactive","title":"午夜列车生存测试","category":"场景测试 · 人生状态","subtitle":"8 个选择，测出你当下活成了哪种状态","disclaimer":"仅供娱乐","intro":"23:47，一列没有终点的火车，在你面前缓缓停靠。车门打开，暖光洒在站台上。你，上不上车？","theme":{"sky1":"#0c1230","sky2":"#2a1e4f","glow":"#ffd27a","accent":"#ff8a5c","text":"#f5f1e8"},"questions":[{"id":1,"scene":"23:47，一列没有目的地的火车停在你面前。车门开了，暖光洒出来。","text":"你上了车。第一件事是？","options":[{"key":"A","text":"先看线路图，搞清楚下一站是哪"},{"key":"B","text":"随遇而安，坐到哪算哪"},{"key":"C","text":"确认同行的人都在车上"},{"key":"D","text":"找个靠窗的空位，戴上耳机"}]},{"id":2,"scene":"轰隆隆——列车驶入长长的隧道，灯灭了几秒，车厢里一片漆黑。","text":"这一刻，你的反应是？","options":[{"key":"A","text":"摸出手机看时间，别耽误事"},{"key":"B","text":"有点小兴奋，像在玩密室"},{"key":"C","text":"下意识说了句「别怕」"},{"key":"D","text":"闭眼，享受这几秒的黑暗"}]},{"id":3,"scene":"灯亮了。你在座椅口袋里发现一张旧明信片，前一位乘客留了一句话。","text":"那句「祝你______」，你希望填的是？","options":[{"key":"A","text":"所求之事，皆能抵达"},{"key":"B","text":"沿途皆有好风景"},{"key":"C","text":"重要的人常在身边"},{"key":"D","text":"有足够的时间陪自己"}]},{"id":4,"scene":"列车停靠在一个空无一人的小站。还没等你看清站牌，它提前开动了。","text":"看着站台缓缓后退，你想的是？","options":[{"key":"A","text":"赶紧查时刻表，看会不会误事"},{"key":"B","text":"正好，反正我也没打算下"},{"key":"C","text":"担心会不会有人赶不上车"},{"key":"D","text":"挺好，清净，没人打扰"}]},{"id":5,"scene":"车厢尽头传来咣当咣当的响声，一辆卖泡面的餐车推过隧道，香味弥漫。","text":"你接过一碗。这顿夜宵，你会？","options":[{"key":"A","text":"快速吃完，不耽误后面的安排"},{"key":"B","text":"深夜泡面是奢侈品，慢慢享用"},{"key":"C","text":"先问同行的人要不要也来一碗"},{"key":"D","text":"小口吃着，配窗外的夜色刚好"}]},{"id":6,"scene":"不知过了多久，你抬头——窗外的星星多得不像话，近得像伸手就能碰到。","text":"这一刻，你的第一反应是？","options":[{"key":"A","text":"拍下来打卡，记录这趟旅程"},{"key":"B","text":"「哇」出声，赶紧许个愿"},{"key":"C","text":"想叫醒旁边的人一起看"},{"key":"D","text":"安静地看很久，心里就够了"}]},{"id":7,"scene":"对面座位的乘客已经打量你很久了。终于，对方笑着开口跟你搭话。","text":"一场深夜的陌生人闲聊，你会？","options":[{"key":"A","text":"三两句摸清对方，聊点有用的"},{"key":"B","text":"随缘聊，投缘就聊通宵"},{"key":"C","text":"礼貌回应，怕冷落对方"},{"key":"D","text":"应付几句，逃回窗外的世界"}]},{"id":8,"scene":"天快亮了。口袋里凭空多出一张车票，印着你的名字，和「当前站」。列车减速。","text":"你站起身，最后一次回望这趟夜车。留在你记忆里的，是？","options":[{"key":"A","text":"下车后的第一个目标，已经想好了"},{"key":"B","text":"这一路的风景，够回味很久"},{"key":"C","text":"同行者的脸，还好你们都在"},{"key":"D","text":"那场久违的、和自己的对话"}]}],"results":[{"key":"A","type":"追光赶路人","tagline":"你心里始终有个要到站的地方","hook":"你不是不会停，你只是太清楚自己要去哪。","portrait":"哪怕是一列深夜火车，你的习惯也是先看线路图、先定目标、再走下一步。你活得像在赶路——睡在陌生的车厢里，梦里都是到站的清晨。你累，但你的眼睛一直亮着：有奔头的人，是会发光的。","strengths":["目标感极强，很少在迷茫里浪费时间","执行力高，决定了就立刻动身","能把任何混乱，理成一张时刻表"],"blindspot":"你盯着终点，容易错过窗外的星空；你一直赶路，久到连自己都不知道，如果突然不赶了，要去哪。","advice":"偶尔上一列没有目的地的车。目的地又不会跑，但你错过的那片星空，永远不会再亮一次。"},{"key":"B","type":"随遇而安风景派","tagline":"既然不知道去哪，那就先看风景","hook":"你不是没主见，你是把「随便」活成了一种天赋。","portrait":"火车去哪就去哪，你到哪就到哪，你把所有的不确定都当成彩蛋。你是那种能在空无一人的小站看出趣味的人，也是那种拿到烂剧本也能演到散场的人。你早就明白：终点是俗套，沿途才常看常新。","strengths":["适应力顶级，到哪都能混得如鱼得水","自带发现快乐的雷达，和你相处很松弛","不较劲、不内耗，活得比大多数人都轻盈"],"blindspot":"「随便」说多了，有时会变成「算了」；在重要的人和事上，你可能缺一点「我就要」的野心。","advice":"松弛感是天赋，但人生有几件事值得你死死攥住。挑一件，认真贪心一次——以你享受过程的本事，做什么都会是一场漂亮旅程。"},{"key":"C","type":"末班守护星","tagline":"你把在乎的人都装在心里","hook":"你不怕到站太远，你怕身边没有人。","portrait":"上车先确认人齐不齐，看到星空第一反应是叫醒旁边的人。你的安全感从来不来自事物，而来自「我关心的人都在」。你是所有关系里最容易被忽略、却又最不能缺少的那个人——有你在，别人才会觉得「稳了」。","strengths":["共情力和责任心拉满，是所有人的情绪底座","记得住别人随口一提的小事","关系在你这里，从来都是越处越长的"],"blindspot":"你把每个人都放在心上，常常把自己放在最后；你太习惯被需要，久了连自己需要什么都不知道。","advice":"你照顾了所有人，也该轮到被人照顾一次。这趟车上，记得给自己留一个靠窗的位置。"},{"key":"D","type":"靠窗观察家","tagline":"你隔着车窗看世界，看得比谁都清","hook":"你不是不合群，你只是更喜欢和世界保持一点距离。","portrait":"提前开车是馈赠，黑暗是享受，陌生人的搭话应付两句就好。你在窗边给自己搭了一个完整的世界，安静地看着风景后退。你比谁都清楚：有些路必须一个人走，有些声音，只有在安静里才听得见。","strengths":["独立思考，从不被人群带节奏","感知细腻，能看到别人看不到的东西","独处能力顶级，自己就能把自己哄好"],"blindspot":"你习惯隔窗观看，久到别人以为你不需要任何人；清冷有时不是距离，是别人想走近时你没留的门。","advice":"窗外的风景，要有人一起看才更动人。偶尔转过身，先开口一次——深夜的火车，恰好是陌生人之间最近的地方。"}]};
+</style></head><body><div class="flash" id="flash"></div><div class="toast" id="toast"></div><div class="stage"><div class="window"><div class="moon"></div><div class="hills"></div><div class="streak s1"></div><div class="streak s2"></div><div class="rail"></div></div><div class="screen on" id="intro"><div class="card"><span class="badge">场景测试 · 人生状态</span><h1 class="title">午夜列车生存测试</h1><div class="sub">10 站旅程 · 分支剧情 · 8 种结局</div><div class="intro-text">23:47，一列没有终点的火车，在你面前缓缓停靠。车门打开，暖光洒在站台上。你，上不上车？——提醒一句：这趟车上有人在喂一只猫，有人在做梦，也有人，正在等你抬头。</div><div class="meta">10 站 · 约 4 分钟 · 仅供娱乐<br><span class="hint">🕯 10 站 · 你的路线由你决定 · 存在隐藏结局</span></div><button class="btn" onclick="begin()">🚂 登上这趟列车</button></div></div><div class="screen" id="quiz"><div class="q-top"><b id="stop"></b><span id="total"></span></div><div class="progress"><i id="bar"></i></div><div class="scene" id="scene"></div><div class="qtext" id="qtext"></div><div id="opts"></div></div><div class="screen" id="result"><div class="card" id="rcard"></div><div class="share-tip">📸 截图分享你的结局 —— 你的路线，可能和别人不一样</div><button class="btn" onclick="location.reload()">↻ 重新上车</button></div><div class="foot">仅供娱乐 · 愿你到站时眼里有光 ✨</div></div><script>
+const TEST={"id":"train","format":"interactive","version":2,"title":"午夜列车生存测试","category":"场景测试 · 人生状态","subtitle":"10 站旅程 · 分支剧情 · 8 种结局","disclaimer":"仅供娱乐","intro":"23:47，一列没有终点的火车，在你面前缓缓停靠。车门打开，暖光洒在站台上。你，上不上车？——提醒一句：这趟车上有人在喂一只猫，有人在做梦，也有人，正在等你抬头。","meta_note":"10 站 · 你的路线由你决定 · 存在隐藏结局","theme":{"sky1":"#0c1230","sky2":"#2a1e4f","glow":"#ffd27a","accent":"#ff8a5c","text":"#f5f1e8"},"questions":[{"id":1,"scene":"23:47，一列没有站名的火车停靠，车门滑开，暖光漫出来，蒸汽在站台上打转。","text":"你踏上车厢。第一眼看向哪里？","options":[{"key":"A","text":"车门旁的线路图——先搞清楚这趟车怎么走"},{"key":"B","text":"传来音乐声的酒吧车厢，听起来正热闹"},{"key":"C","text":"清点一起上车的人，一个都不能少"},{"key":"D","text":"车厢最后一排靠窗的空位，正好没人"}]},{"id":2,"scene":"轰隆隆——列车驶入长长的隧道，灯灭了几秒，车厢一片漆黑。","text":"黑暗里，你脑子里冒出的第一个念头是？","options":[{"key":"A","text":"默默计时——几点出隧道，我心里有数"},{"key":"B","text":"刺激！免费密室体验，血赚"},{"key":"C","text":"小声说了句「没事，马上就好」，虽然没人问"},{"key":"D","text":"闭眼享受——这几秒的黑，是完整属于我的"}]},{"id":3,"scene":"灯亮了。座椅口袋里有一张旧明信片，前一位乘客留了一句话。","text":"那句「祝你______」，你希望填的是？","options":[{"key":"A","text":"所求之事，皆能抵达"},{"key":"B","text":"沿途皆有好风景"},{"key":"C","text":"重要的人常在身边"},{"key":"D","text":"有足够的时间陪自己"}]},{"id":4,"show_if":{"q":1,"in":["A"]},"scene":"经过餐车，飘来一阵热汤的香气。餐车员举着今晚的新菜单：「来点什么？」","text":"你接过笔。先做什么？","options":[{"key":"A","text":"先问供应到几点，别打乱后面的安排"},{"key":"B","text":"直接点招牌，听起来就好吃"},{"key":"C","text":"多点一份——同行的人还没吃吧"},{"key":"D","text":"一杯热美式就好，不耽误看窗外"}]},{"id":4,"show_if":{"q":1,"in":["B","C","D"]},"scene":"车厢尽头是观景平台，玻璃冰凉，星星低得仿佛伸手就碰到。那儿已经站了一个人。","text":"你走向观景台。到了之后，你会？","options":[{"key":"A","text":"顺便记下这站的站名——信息收集完毕"},{"key":"B","text":"趴在栏杆上吹风，忍不住笑出声"},{"key":"C","text":"把外套披在那个发抖的人身上"},{"key":"D","text":"找个安静角落，和夜色独处一会儿"}]},{"id":5,"scene":"咣当，咣当——卖泡面的餐车推过来，香味弥漫整个车厢。就在这时，行李架上传来一声很轻的「喵」。","text":"你接过泡面。你的第一反应？","options":[{"key":"A","text":"快速吃完，不耽误后面的安排"},{"key":"B","text":"深夜泡面是奢侈品，低头先享用"},{"key":"C","flag":"cat","text":"掰一半举上去，递给那只探出头的小黑猫：「小家伙，你也上车了？」"},{"key":"D","text":"小口吃着，配窗外的夜色刚好"}]},{"id":6,"scene":"不知过了多久，你抬头——窗外的星星多得不像话，整片原野都蒙着一层银蓝色。","text":"这一刻，你会？","options":[{"key":"A","text":"拍下时刻和位置，这段星空值得进我的档案"},{"key":"B","text":"「哇」出声，赶紧许一个愿望"},{"key":"C","text":"叫醒旁边的人：「快看，幸好你在」"},{"key":"D","text":"安静地看很久。够了，我收进心里了"}]},{"id":7,"scene":"对面座位的乘客已经打量你很久，终于笑着开口：「你也是去远方的人吗？」","text":"一场深夜闲聊。你会？","options":[{"key":"A","text":"三两句摸清对方路数，聊点对彼此有用的"},{"key":"B","text":"随缘聊——投缘的话，聊到终点站"},{"key":"C","text":"人家鼓起勇气搭话，不能冷场，认真陪聊"},{"key":"D","text":"礼貌应付几句，逃回窗外的世界"}]},{"id":8,"show_if":{"q":7,"in":["A","B"]},"scene":"咣当咣当——列车员推着门进来查票了。奇怪的是，他查得格外仔细，像在找什么「小乘客」。","text":"列车员停在你面前，伸出手。你？","options":[{"key":"A","text":"票码早已亮在手机上，流程滴水不漏"},{"key":"B","text":"翻遍全身哈哈大笑：「完了，忘带了」"},{"key":"C","text":"先安抚旁边紧张的新乘客：「别怕，出示车票就行」"},{"key":"D","text":"默默递票，心想：希望查快些，让我安静会儿"}]},{"id":8,"show_if":{"q":7,"in":["C","D"]},"scene":"深夜广播忽然响起，传出一首老歌——正好是你曾经反复循环的那一首。","text":"旋律响起的瞬间，你？","options":[{"key":"A","text":"想起这首歌出现在哪段日程里，存档，继续"},{"key":"B","text":"立刻跟着哼，开一场一个人的演唱会"},{"key":"C","text":"先看向同行的人——你也想起什么了吗？"},{"key":"D","text":"闭上眼。这一首，完整地留给过去的自己"}]},{"id":9,"scene":"行李架深处躺着一只被遗忘的旧皮箱，半开着，露出一本翻旧的日记。","text":"你伸手帮它把箱子合上。合上的瞬间，你想的是？","options":[{"key":"A","text":"交给列车员登记失物——让主人下一趟就能找到"},{"key":"B","text":"可惜了，不能翻两页，盲盒拆一半最难受"},{"key":"C","text":"丢箱子的人一定急坏了，替TA收好这箱回忆"},{"key":"D","text":"有些故事不该被打扰。我轻轻合上，继续看我的窗"}]},{"id":10,"scene":"天快亮了。口袋里凭空多出一张车票，印着你的名字，和「当前站」。列车缓缓减速。","text":"你站起身收拾行李。最后，你的目光落在？","options":[{"key":"A","text":"站外的路——下车后第一件事，我已经排好了"},{"key":"B","text":"窗外的朝霞——这趟够我回味很久"},{"key":"C","text":"身边的同行者——还好，你们都在"},{"key":"D","text":"车窗里自己的倒影——好久不见，你看起来亮了一点"}]}],"results":[{"key":"A","type":"追光赶路人","tagline":"你心里始终有个要到站的地方","hook":"你不是不会停，你只是太清楚自己要去哪。","rarity":"每 100 位乘客里约 26 位","portrait":"哪怕是深夜的火车，你的第一反应也是找线路图——先搞清楚这趟车怎么走，再决定自己怎么坐。隧道里你在计时，星空下你在存档，查票时你票码早就亮在手上。你活得像在赶路：睡在陌生的车厢里，梦里都是到站的清晨。别人问你图什么，你说不知道，但你的眼睛一直亮着——有奔头的人，是会发光的。","strengths":["目标感极强，很少在迷茫里浪费时间","执行力高，决定了就立刻动身","能把任何混乱，理成一张时刻表"],"blindspot":"你盯着终点，容易错过窗外的星空——这趟车的星星就在你右手边，你却抬头了一次，然后低头继续安排。你一直赶路，久到连自己都不知道：如果突然不赶了，要去哪。","advice":"偶尔上一列没有目的地的车。目的地又不会跑，但你错过的那片星空，永远不会再亮一次。赶路的人，值得在风景里多坐一站。","note":"列车员留言：你的票保存得最好。但下次，允许它皱一下。","partner":"风景派（B）——他们会把你排满的行程表吹走一页，然后你会发现，那一页本来也不用排。"},{"key":"B","type":"随遇而安风景派","tagline":"既然不知道去哪，那就先看风景","hook":"你不是没主见，你是把「随便」活成了一种天赋。","rarity":"每 100 位乘客里约 24 位","portrait":"上车先听哪里有音乐，过隧道喊刺激，深夜泡面当成米其林，查票忘带车票也能笑出声。火车去哪就去哪，你到哪就到哪——你把所有的不确定都当成彩蛋。你是那种能在空无一人的小站看出趣味的人，也是拿到烂剧本也能演到散场的人。你早就明白：终点是俗套，沿途才常看常新。","strengths":["适应力顶级，到哪都能混得如鱼得水","自带发现快乐的雷达，和你相处很松弛","不较劲、不内耗，活得比大多数人都轻盈"],"blindspot":"「随便」说多了，有时会变成「算了」；那本旧日记你只差三页就能翻到——有些事，你连试都没试就放回了架子。在重要的人和事上，你可能缺一点「我就要」的野心。","advice":"松弛感是天赋，但人生有几件事值得你死死攥住。挑一件，认真贪心一次——以你享受过程的本事，做什么都会是一场漂亮旅程。","note":"列车员留言：整个车厢就你哼的歌最大声。别改。","partner":"守护星（C）——他们记得你随口说的每句话，包括那句「随便吧」背后的「其实我想要」。"},{"key":"C","type":"末班守护星","tagline":"你把在乎的人都装在心里","hook":"你不怕到站太远，你怕身边没有人。","rarity":"每 100 位乘客里约 20 位","portrait":"上车先清点人数，黑暗里安慰的其实是所有人（包括你自己），多点的一份泡面永远不是给自己的。看到星空，你的第一反应不是许愿，是叫醒旁边的人。你是所有关系里最容易被忽略、却又最不能缺少的那个人——有你在，别人才会觉得「稳了」。","strengths":["共情力和责任心拉满，是所有人的情绪底座","记得住别人随口一提的小事","关系在你这里，从来都是越处越长的"],"blindspot":"你把每个人都放在心上，常常把自己放在最后——那件披出去的外套，观景台上你自己也在发抖。你太习惯被需要，久了连自己需要什么都不知道。","advice":"你照顾了所有人，也该轮到被人照顾一次。这趟车上，记得给自己留一个靠窗的位置，然后理直气壮地坐下去。","note":"列车员留言：谢谢你安顿了三排乘客。这一排，交给我。","partner":"观察家（D）——他们不会拉你去每场热闹，但会在你最累的时候，安静地递来一杯刚好温度的水。"},{"key":"D","type":"靠窗观察家","tagline":"你隔着车窗看世界，看得比谁都清","hook":"你不是不合群，你只是更喜欢和世界保持一点距离。","rarity":"每 100 位乘客里约 20 位","portrait":"你选了最后一排靠窗，黑暗是享受，泡面配夜色，陌生人的搭话应付两句就逃回窗边。那本日记，你选择轻轻合上——有些故事不该被打扰。你在窗边给自己搭了一个完整的世界，安静地看着风景后退。你比谁都清楚：有些路必须一个人走，有些声音，只有在安静里才听得见。","strengths":["独立思考，从不被人群带节奏","感知细腻，能看到别人看不到的东西","独处能力顶级，自己就能把自己哄好"],"blindspot":"你习惯隔窗观看，久到别人以为你不需要任何人——最后那个看向车窗倒影的瞬间，其实你也很想有人坐在你对面。清冷有时不是距离，是别人想走近时，你没留的门。","advice":"窗外的风景，要有人一起看才更动人。偶尔转过身，先开口一次——深夜的火车上，恰好是陌生人之间最近的距离。","note":"列车员留言：你一直没开头顶的灯。但星星都替你把位置占了。","partner":"赶路人（A）——他们会带来外面的消息，而你，是那个能让他们终于停下来的人。"},{"key":"A2","secret":true,"type":"提前下车的人（隐藏结局）","tagline":"你的行程表上，多了一团暖","hook":"你连喂猫，都喂得像在执行一个重要日程。","rarity":"每 100 位乘客里约 3 位","portrait":"你是赶路人，但你在泡面香气里抬了头——行李架上的那声「喵」，被你认真登记进了今晚的行程。你掰泡面的动作干脆利落，像在签收一个急件。天快亮时，小黑猫跟着你走向车门：它等的就是这个把它安排得明明白白的人。你的计划表永远有空白栏，这次，你填了一个小生命进去。","strengths":["目标感极强，很少在迷茫里浪费时间","执行力高，决定了就立刻动身","善良对你来说不是情绪，是行动"],"blindspot":"你连温柔都做得像任务清单，偶尔也会被「有效率的心软」压得喘不过气——允许自己笨拙地爱。","advice":"提前下车的那个人，往往带着最重要的东西走。这一次你选对了优先级——下次记得，星空也是急件。","note":"列车员留言：查票时我看见了，假装没看见。它挑中的人，不会差。","partner":"风景派（B）——下趟车，让他们教你怎么把行程表折成纸飞机。"},{"key":"B2","secret":true,"type":"最佳风景奖（隐藏结局）","tagline":"最好的风景，不在时刻表上","hook":"你是来蹭车的，结果捎回家一个活的小生命。","rarity":"每 100 位乘客里约 2 位","portrait":"你上车没看线路图，吃泡面没打算分给谁，纯粹是那声「喵」听起来比隧道还好玩——你就举着半碗面仰头笑了。结果小黑猫跳下来，就没再离开过你的外套口袋。这趟车最好的彩蛋不藏在任何一站，藏在你「顺便」的善意里。你这一生救场无数，用的全是不经意。","strengths":["适应力顶级，到哪都能混得如鱼得水","快乐会传染，连猫都先被你骗到手","你的善意零成本、不图报、当场兑现"],"blindspot":"「顺便」给出去的心太多了，偶尔正事会被你放鸽子——小猫都要吃饭的，你也一样。","advice":"保持你的「随便」，它比大多数人的「认真」更接近善良的本义。只补一句：下次抬头，可以顺便看看自己。","note":"列车员留言：它从没对别人翻过肚皮。你可能不知道自己中了什么奖。","partner":"守护星（C）——你们俩凑一块，那只猫的伙食和人生规划都稳了。"},{"key":"C2","secret":true,"type":"编制内守护者（隐藏结局）","tagline":"守护星终于有守护对象了","hook":"全车厢的人都被你安顿了，包括一只素不相识的猫。","rarity":"每 100 位乘客里约 2 位","portrait":"你听到「喵」的瞬间，手比脑子快——半碗泡面已经举了上去，还顺手垫了张纸巾。上车清点人数的是你，黑暗里安慰别人的是你，现在连行李架上的小黑猫都有了归属。天亮时它赖在你怀里不肯走：它认得出来，你身上有「自己人」的味道。","strengths":["共情力和责任心拉满，是所有人的情绪底座","照顾不是负担，是你的天赋","小动物和人一样，在你这里都会被接住"],"blindspot":"你习惯了被需要，久到忘了：被你照顾的人里，也该有一个位置是留给自己的。","advice":"你的守护通过了物种测试，正式编制化。也记得给那个总撑伞的自己，申请一次被照顾。","note":"列车员留言：按规定乘客不能带猫——但按直觉，它是你亲选的。我通融。","partner":"观察家（D）——他们安静，却总能看见你没吃的那口早餐。"},{"key":"D2","secret":true,"type":"窗边的影子猫（隐藏结局）","tagline":"你以为你是一个人看夜景","hook":"安静的灵魂，是互相认出来的。","rarity":"每 100 位乘客里约 3 位","portrait":"你没理陌生人的搭话，应付完就逃回窗边——但行李架上那声「喵」，你听见了。你没说话，只是把泡面往上递了递。小黑猫跳下来，没去任何人那里，盘进了你的膝盖。你一路隔着车窗看世界，世界第一次主动坐到了你身边，还打起了呼噜。","strengths":["独立思考，从不被人群带节奏","感知细腻，猫和诗人都懂你","你的安静不带刺，所以敢靠近"],"blindspot":"你愿意对一只猫递出半碗面，却还没准备好对一个人递出整句心里话——门槛设太高，路过的都以为是拒绝。","advice":"影子猫选择你的理由，以后也可以对人说一遍：「我只是安静，不是不需要。」从今晚开始，窗边这个位置，合法地多了一个人。","note":"列车员留言：它挑了全车厢最不会被打扰的座位。谢谢你允许它。","partner":"赶路人（A）——他们会在某一站突然回头：原来最重要的乘客，一直坐在自己腿上。"}]};
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => (s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const answers = [];
-let step = 0;
+const TOTAL = new Set(TEST.questions.map(q => q.id)).size;  // 实际要答的站数
+let cursor = 0;          // TEST.questions 的扫描指针
+let answered = 0;        // 已答站数
+const byQid = {};        // 题 id -> 所选 key（供分支条件查询）
+const flags = new Set(); // 隐藏标记（如 'cat'）
 
 // 星空
 (function stars() {
@@ -112,7 +147,30 @@ function show(id) {
   $(id).classList.add('on');
 }
 
-function begin() { step = 0; renderQ(); show('quiz'); }
+// 分支判定：show_if = {q: 前置题id, in:[key...]}
+function visible(q) {
+  if (!q.show_if) return true;
+  const a = byQid[q.show_if.q];
+  return a && q.show_if.in.indexOf(a) !== -1;
+}
+
+// 按顺序找下一道命中分支条件的题
+function nextQuestion() {
+  while (cursor < TEST.questions.length) {
+    const q = TEST.questions[cursor];
+    cursor++;
+    if (visible(q)) return q;
+  }
+  return null;
+}
+
+function begin() {
+  cursor = 0; answered = 0;
+  Object.keys(byQid).forEach(k => delete byQid[k]);
+  flags.clear();
+  ask();
+  show('quiz');
+}
 
 // 打字机旁白
 let typeTimer = null;
@@ -128,55 +186,99 @@ function typeScene(text) {
   }, 24);
 }
 
-function renderQ() {
-  const q = TEST.questions[step], n = TEST.questions.length;
-  $('stop').textContent = '第 ' + (step + 1) + ' 站 / 共 ' + n + ' 站';
+let current = null;
+function ask() {
+  current = nextQuestion();
+  if (!current) { renderResult(); return; }
+  const q = current;
+  $('stop').textContent = '第 ' + (answered + 1) + ' 站 / 共 ' + TOTAL + ' 站';
   $('total').textContent = TEST.category;
-  $('bar').style.width = (step / n) * 100 + '%';
+  $('bar').style.width = (answered / TOTAL) * 100 + '%';
   typeScene(q.scene || '');
   $('qtext').textContent = q.text;
   $('opts').innerHTML = q.options.map((o, i) =>
-    '<button class="opt" onclick="pick(' + i + ')"><span class="k">' + esc(o.key) + '</span><span>' + esc(o.text) + '</span></button>'
+    '<button class="opt' + (o.flag ? ' cat' : '') + '" onclick="pick(' + i + ')"><span class="k">' +
+    (o.flag === 'cat' ? '🐈' : esc(o.key)) + '</span><span>' + esc(o.text) + '</span></button>'
   ).join('');
   window.scrollTo({ top: 0 });
 }
 
 function pick(i) {
-  answers.push(TEST.questions[step].options[i].key);
-  step++;
-  if (step < TEST.questions.length) { renderQ(); }
-  else { renderResult(); }
+  const q = current, o = q.options[i];
+  byQid[q.id] = o.key;
+  answered++;
+  if (o.flag) {
+    flags.add(o.flag);
+    if (o.flag === 'cat') {
+      const f = $('flash'), t = $('toast');
+      f.classList.remove('go'); void f.offsetWidth; f.classList.add('go');
+      t.textContent = '🐈 小黑猫好像……记住你了';
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2400);
+    }
+  }
+  ask();
 }
 
-// 计分：与后端 engine.py 完全一致（次数最多者命中，并列取先出现者）
+// 计分：票数最多者为「主类型」（并列取先出现者）；抱过猫 → 命中该主类型的隐藏结局 <key>2
 function score() {
   const order = [], count = {};
-  answers.forEach(k => { if (!(k in count)) { count[k] = 0; order.push(k); } count[k]++; });
+  Object.keys(byQid).forEach(qid => {
+    const k = byQid[qid];
+    if (!(k in count)) { count[k] = 0; order.push(k); }
+    count[k]++;
+  });
   let best = order[0];
   order.forEach(k => { if (count[k] > count[best]) best = k; });
-  return TEST.results.find(r => r.key === best);
+  const secretKey = best + '2';
+  const hit = flags.has('cat') && TEST.results.find(r => r.key === secretKey);
+  return { main: best, tally: count, r: hit || TEST.results.find(x => x.key === best) };
+}
+
+// 结局彩蛋：把「你实际走过的站」回放成一段足迹（含分支路线 + 是否抱过猫）
+function journey(r) {
+  const lines = [];
+  TEST.questions.forEach(q => {
+    if (!(q.id in byQid)) return;              // 分支未命中的题，跳过
+    const k = byQid[q.id];
+    const o = q.options.find(x => x.key === k);
+    lines.push({ scene: q.scene, text: o ? o.text : k, cat: !!o && o.flag === 'cat' });
+  });
+  let html = '<div class="sec"><h3>🗺 这一路的你（' + lines.length + ' 站足迹回放）</h3>';
+  html += lines.map((l, i) =>
+    '<div class="jline' + (l.cat ? ' jcat' : '') + '">' +
+    '<span class="jstop">' + (i + 1) + '</span>' +
+    '<div><div class="jscene">' + esc(l.scene) + '</div>' +
+    '<div class="jpick">你的选择：' + esc(l.text) + (l.cat ? ' 🐈' : '') + '</div></div></div>').join('');
+  html += '<div class="jsum">' + (r.secret
+    ? '这条路线是<b>你独有的</b>——全车厢没人和你走了一模一样的站。'
+    : '你的路线里有 <b>2 个岔口</b>，换一个选择，就是另一段风景。') + '</div></div>';
+  return html;
 }
 
 function renderResult() {
-  const r = score(), n = TEST.questions.length;
-  const dist = {};
-  answers.forEach(k => dist[k] = (dist[k] || 0) + 1);
-  const bars = ['A', 'B', 'C', 'D'].filter(k => dist[k]).map(k =>
+  const s = score(), r = s.r, n = TOTAL;
+  const bars = Object.keys(s.tally).sort((a, b) => s.tally[b] - s.tally[a]).map(k =>
     '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12.5px;color:var(--muted)">' +
     '<span style="width:16px;font-weight:800;color:var(--glow)">' + k + '</span>' +
     '<div style="flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden">' +
-    '<i style="display:block;height:100%;width:' + (dist[k] / n * 100) + '%;background:linear-gradient(90deg,var(--glow),var(--accent));border-radius:6px"></i></div>' +
-    '<span>' + dist[k] + ' 票</span></div>').join('');
+    '<i style="display:block;height:100%;width:' + (s.tally[k] / n * 100) + '%;background:linear-gradient(90deg,var(--glow),var(--accent));border-radius:6px"></i></div>' +
+    '<span>' + s.tally[k] + ' 票</span></div>').join('');
   $('rcard').innerHTML =
-    '<span class="badge">列车到站 · 你的专属结局</span>' +
+    '<span class="badge' + (r.secret ? ' secret' : '') + '">' +
+    (r.secret ? '🌟 隐藏结局达成 · 你的路线独一无二' : '列车到站 · 你的专属结局') + '</span>' +
     '<div class="rtype">' + esc(r.type) + '</div>' +
     '<div class="rtag">' + esc(r.tagline) + '</div>' +
-    '<div class="hook">' + esc(r.hook) + '</div>' +
+    (r.rarity ? '<span class="rarity">🎭 ' + esc(r.rarity) + '</span>' : '') +
+    '<div class="hook" style="margin-top:14px">' + esc(r.hook) + '</div>' +
     '<div style="margin-top:14px">' + bars + '</div>' +
     '<div class="sec"><h3>🪞 人格画像</h3><p>' + esc(r.portrait) + '</p></div>' +
-    '<div class="sec"><h3>💪 你的三个隐藏优势</h3><ul>' + r.strengths.map(s => '<li>' + esc(s) + '</li>').join('') + '</ul></div>' +
+    '<div class="sec"><h3>💪 你的三个隐藏优势</h3><ul>' + r.strengths.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul></div>' +
     '<div class="sec"><h3>⚠️ 一个要警惕的盲区</h3><p>' + esc(r.blindspot) + '</p></div>' +
-    '<div class="sec"><h3>💡 这趟列车给你的建议</h3><p>' + esc(r.advice) + '</p></div>';
+    '<div class="sec"><h3>💡 这趟列车给你的建议</h3><p>' + esc(r.advice) + '</p></div>' +
+    journey(r) +
+    (r.note ? '<div class="note">🚂 ' + esc(r.note) + '</div>' : '') +
+    (r.partner ? '<div class="partner"><b>🤝 下一站 · 缘分提示</b><br>' + esc(r.partner) + '</div>' : '');
   show('result');
   window.scrollTo({ top: 0 });
 }

@@ -36,6 +36,12 @@ content/             # 小红书笔记弹药包（每品类一个 .md：题库+�
 - `results[]`: `{key, type, tagline, hook, portrait, strengths[], blindspot, advice}`
   - `type/tagline/hook` = 免费层；`portrait/strengths/blindspot/advice` = 付费层
 - 互动格式额外加：`format: "interactive"`、`intro`（开场旁白）、`theme:{sky1,sky2,glow,accent,text}`、每题加 `scene`（场景旁白）
+- 互动 v2 分支与隐藏结局：
+  - `questions[].show_if: {q: 前置题id, in: [key...]}` —— 前置题选了指定 key 才出现（同 id 的题互斥，只出一题 = 剧情分支）；页面显示「共 N 站」按去重后的 id 数算
+  - `questions[].options[].flag: "cat"` —— 选中即埋隐藏标记（前端自动闪光+提示）
+  - `results[].secret: true` —— 隐藏结局；命名规则：主类型 key + `"2"`（如 A→A2），持有 cat 标记时命中
+  - `results[].rarity / note / partner` —— 稀有度文案 / NPC 留言 / 缘分提示，结果页自动渲染
+  - 参考实现：`data/train.json`（10 站 · 2 处分支 · 8 结局：4 主 + 4 隐藏）
 
 ## 标准工作流
 
